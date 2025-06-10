@@ -1,8 +1,7 @@
-module dff (clk, reset, d, q);
-    input clk;
-    input reset;
-    input d; 
-    output q; 
+module dff (input clk, 
+            input reset, 
+            input d, 
+            output q);
 
     reg q; 
 
