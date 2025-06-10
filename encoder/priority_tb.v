@@ -1,36 +1,39 @@
 module priority_tb();
-
-reg [3:0] a; 
-reg [3:0] b; 
-reg [3:0] c; 
-reg [3:0] d;
-reg [1:0] sel;
+ 
+reg [7:0] in; 
+wire [2:0] out;
 
 integer i;
 
-wire [3:0] out; 
- 
-encoder enc(.a(a),
-            .b(b),
-            .c(c),
-            .d(d),
-            .sel(sel),
-            .out(out));
+encoder p_encoder(  .in(in),
+                    .out(out));
     
-
 initial begin 
 
     $dumpfile("waveform.vcd");
     $dumpvars(0, priority_tb); 
 
-    sel <=0; 
-    a <= $random; 
-    b <= $random;
-    c <= $random;
-    d <= $random;
+    for(i=0; i<8; i=i+1) begin
+        in = 8'b1 << i;
+        #5;
+        
+        $display("in = %b => out = %b", in, out);
+        
+    end
 
-    for (i=1; i<5; i=i+1) begin
-        #5 sel <= i;
+    //test all low bits
+    in = 8'b00000000; #5;
+        $display ("in = %b => out = %b (should be 000)", in, out);
+    
+    //test multiple high bits
+    in = 8'b01010101; #5;
+        $display("in = %b, out = %b, (should be 110)", in, out);
+
+    //random 
+    repeat(5) begin 
+        in = $random; 
+        #5; 
+        $display("in = %b ==> out = %b", in, out);
     end
 
     #5 $finish;

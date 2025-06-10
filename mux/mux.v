@@ -1,5 +1,9 @@
-module mux4to1(input [3:0] a, input [3:0] b, input [3:0] c,
-    input [3:0] d, input [1:0] sel, output reg [3:0] out); 
+module mux4to1( input [3:0] a, 
+                input [3:0] b, 
+                input [3:0] c,
+                input [3:0] d, 
+                input [1:0] sel, 
+                output reg [3:0] out); 
 
    always @(a or b or c or d or sel) begin 
     case (sel)
